@@ -23,7 +23,7 @@ https://site.localhost/sites/default/files/styles/responsive/public/400/400/1/te
 
 ## Getting started.
 
-Your site will need a single Drupal image style creating called responsive which uses the responsive effect and nothing else.
+Your site will need at least one Drupal image style which includes the responsive image effect.
 
 ## Generating image URLs.
 
