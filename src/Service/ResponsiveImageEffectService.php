@@ -30,6 +30,10 @@ class ResponsiveImageEffectService {
   public function responsiveImageUrl($source_file_uri, array $p, $image_style_name = 'responsive') {
     $image_style = ImageStyle::load($image_style_name);
 
+    if (empty($image_style)) {
+      throw new \Exception('No such image style: ' . $image_style_name);
+    }
+
     $width = $p['w'];
     $height = !empty($p['h']) ? $p['h'] : $p['w'];
     $crop = !empty($p['c']) ? 1 : 0;

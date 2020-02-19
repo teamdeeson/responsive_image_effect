@@ -4,6 +4,8 @@ namespace Drupal\responsive_image_effect\PathProcessor;
 
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
 use Drupal\Core\StreamWrapper\StreamWrapperManagerInterface;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\responsive_image_effect\Plugin\ImageEffect\ResponsiveImageEffect;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -61,18 +63,45 @@ class PathProcessorImageStyles implements InboundPathProcessorInterface {
     // Strip out path prefix.
     $rest = preg_replace('|^' . preg_quote($path_prefix, '|') . '|', '', $path);
 
-    // Get the image style, scheme, width, height, crop and path.
-    if (substr_count($rest, '/') >= 5) {
-      list($image_style, $scheme, $width, $height, $crop, $file) = explode('/', $rest, 6);
-
-      // Set the file as query parameter.
-      $request->query->set('file', $file);
-
-      return $path_prefix . $image_style . '/' . $scheme . '/' . $width . '/' . $height . '/' . $crop;
-    }
-    else {
+    // Give up if too few args.
+    if (substr_count($rest, '/') < 3) {
       return $path;
     }
+
+    // First decide if we are dealing with a classic image style or one of our
+    // responsive image styles.
+    list($image_style, $scheme, $filepath) = explode('/', $rest, 3);
+
+    if (!$this->_imageStyleHasResponsiveEffect($image_style)) {
+      // This is a classic image style.
+      $request->query->set('file', $filepath);
+      return $path_prefix . $image_style . '/' . $scheme;
+    }
+
+    list($width, $height, $crop, $file) = explode('/', $filepath, 4);
+
+    // Set the file as query parameter.
+    $request->query->set('file', $file);
+
+    return $path_prefix . $image_style . '/' . $scheme . '/' . $width . '/' . $height . '/' . $crop;
+  }
+
+
+  /**
+   * Check if an image style includes a responsive image effect.
+   *
+   * @param $image_style
+   *
+   * @return bool
+   */
+  protected function _imageStyleHasResponsiveEffect($image_style) {
+    $image_style = ImageStyle::load($image_style);
+    foreach ($image_style->getEffects() as $effect) {
+      if ($effect instanceof ResponsiveImageEffect) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
 }

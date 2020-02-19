@@ -1,13 +1,10 @@
 # 🖼️ Responsive image generator.
 
-This module allows the programatic generation of responsive images.
-
-!Warning: Use of this module *replaces* Drupal's standard mechanism for building image styles.  Any image style you create MUST now include the
-new responsive effect.
+This module allows the programatic generation of responsive images.  Note this image style will not work with any of Drupal's normal theming mechanisms and this module should only be used by those with full control over their theme or delivering code in a headless environment.
 
 Given an image file called `test.png` in the public file, i.e. `sites/default/files/test.png`
 
-Then the responsive image style will generate URLs of the type:
+Then it is possible to generate responsive image URLs of the form:
 
 https://site.localhost/sites/default/files/styles/responsive/public/{width}/{height}/{crop}/test.png?itok={itok}
 
@@ -22,6 +19,17 @@ For example, this generates a cropped 400 x 400 image:
 https://site.localhost/sites/default/files/styles/responsive/public/400/400/1/test.png?itok=fsdkjfksdj
 
 ## 🐣 Getting started.
+
+Add the following to the `repositories` section of your site's `composer.json` file
+
+```javascript
+    {
+      "type": "vcs",
+      "url": "https://github.com/teamdeeson/responsive_image_effect.git"
+    }
+```
+
+You can then run `composer require teamdeeson/responsive_image_effect` to download the module and `drush @docker en responsive_image_effect` to enable the module.
 
 Your site will need at least one Drupal image style which includes the responsive image effect.
 
@@ -72,3 +80,7 @@ e.g. the following drush command generates a URL for an image with entity id 5, 
 e.g. the following drush command generates a URL for an image with entity id 5, width 300 and height of 500 with a crop
 
 `drush @docker rig 5 500 500 --crop`
+
+e.g. the following drush command generates a URL for an image with entity id 5, width 300 and height of 210 (0.7 x 300) and specifies an image style called low-res
+
+`drush @docker rig 5 300 --crop=0.7 --style=low_res`
