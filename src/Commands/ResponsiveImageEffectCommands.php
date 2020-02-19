@@ -34,14 +34,17 @@ class ResponsiveImageEffectCommands extends DrushCommands {
    * @arg width Width of the responsive image in pixels.
    * @arg height height of the responsive image in pixels.
    * @options --crop boolean to crop to the dimensions using focal point. You can also provide a value here to calculate the crop ratio if you do not specify a height.
+   * @options --style string to specify the image style to use (defaults to 'responsive').
    * @usage rie:genRespImg media_id width --crop
    *   Displays a URL for the image
    */
-  public function generateImageUrl($media_id, $width, $height = 0, $options = ['crop' => 1]) {
+  public function generateImageUrl($media_id, $width, $height = 0, $options = ['crop' => 1, 'style' => 'responsive']) {
+    /** @var \Drupal\responsive_image_effect\Service\ResponsiveImageEffectService $responsiveImageEffectService */
     $responsiveImageEffectService = \Drupal::getContainer()->get('responsive_image_effect.responsive_image_service');
 
     $width = (int) $width;
     $height = (int) $height;
+    $image_style_name = $options['style'];
 
     $media = Media::load($media_id);
     $fid = $media->getSource()->getSourceFieldValue($media);
@@ -59,7 +62,7 @@ class ResponsiveImageEffectCommands extends DrushCommands {
       $params = $responsiveImageEffectService->crop($width, $ratio);
     }
 
-    $src = $responsiveImageEffectService->responsiveImageUrl($uri, $params);
+    $src = $responsiveImageEffectService->responsiveImageUrl($uri, $params, $image_style_name);
     $this->output()->writeln($src);
   }
 

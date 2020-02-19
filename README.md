@@ -1,13 +1,10 @@
-# Responsive image generator.
+# 🖼️ Responsive image generator.
 
-This module allows the programatic generation of responsive images.
-
-!Warning: Use of this module *replaces* Drupal's standard mechanism for building image styles.  Any image style you create MUST now include the
-new responsive effect.
+This module allows the programatic generation of responsive images.  Note this image style will not work with any of Drupal's normal theming mechanisms and this module should only be used by those with full control over their theme or delivering code in a headless environment.
 
 Given an image file called `test.png` in the public file, i.e. `sites/default/files/test.png`
 
-Then the responsive image style will generate URLs of the type:
+Then it is possible to generate responsive image URLs of the form:
 
 https://site.localhost/sites/default/files/styles/responsive/public/{width}/{height}/{crop}/test.png?itok={itok}
 
@@ -21,11 +18,22 @@ Where the parameters are as follows:
 For example, this generates a cropped 400 x 400 image:
 https://site.localhost/sites/default/files/styles/responsive/public/400/400/1/test.png?itok=fsdkjfksdj
 
-## Getting started.
+## 🐣 Getting started.
+
+Add the following to the `repositories` section of your site's `composer.json` file
+
+```javascript
+    {
+      "type": "vcs",
+      "url": "https://github.com/teamdeeson/responsive_image_effect.git"
+    }
+```
+
+You can then run `composer require teamdeeson/responsive_image_effect` to download the module and `drush @docker en responsive_image_effect` to enable the module.
 
 Your site will need at least one Drupal image style which includes the responsive image effect.
 
-## Generating image URLs.
+## 🤖 Generating image URLs.
 
 To generate the URLs, a Utility service is available:
 
@@ -33,21 +41,23 @@ To generate the URLs, a Utility service is available:
     $responsiveImageEffectService = \Drupal::getContainer()->get('responsive_image_effect.responsive_image_service');
     $fileUri = 'public://test.png';
     
-    // Create a resized image preserving original ratio with a width of 100px.
+    // Create a resized image preserving original aspect ratio with a width of 100px.
+    // "https://site.localhost/sites/default/files/styles/responsive/public/100/0/0/test.png?itok=fsdkjfksdj"
     $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, ['w' => 100]);
     
-    // Create an image 300px wide with the height a maximum ratio of 0.75 (3/4 of width).
-    $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, $responsiveImageEffectService->crop(300, 0.75));
+    // Create an image 400px wide with the height a maximum ratio of 0.75 (3/4 of width).
+    // "https://site.localhost/sites/default/files/styles/responsive/public/400/300/1/test.png?itok=fsdkjfksdj"
+    $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, $responsiveImageEffectService->crop(400, 0.75));
     
     // Create a srcset set of images.
     $srcset = $responsiveImageEffectService->makeSrcset($fileUri, [ ['w' => 100, 'h' => 100, 'c' => FALSE], ['w' => 200, 'h' => 200, 'c' => FALSE], ['w' => 300, 'h' => 300, 'c' => FALSE] ]);
 ```
 
-## Cropping.
+## ✂ Cropping.
 
 The module makes use of the [focal point](https://drupal.org/project/focal_point) module for cropping to centre any crop dimensions around a given point.
 
-## Drush command utility.
+## 🖇️ Drush command utility.
 
 There is a drush command file which allows you to generate URLs.
 
@@ -70,3 +80,7 @@ e.g. the following drush command generates a URL for an image with entity id 5, 
 e.g. the following drush command generates a URL for an image with entity id 5, width 300 and height of 500 with a crop
 
 `drush @docker rig 5 500 500 --crop`
+
+e.g. the following drush command generates a URL for an image with entity id 5, width 300 and height of 210 (0.7 x 300) and specifies an image style called low-res
+
+`drush @docker rig 5 300 --crop=0.7 --style=low_res`
