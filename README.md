@@ -33,11 +33,13 @@ To generate the URLs, a Utility service is available:
     $responsiveImageEffectService = \Drupal::getContainer()->get('responsive_image_effect.responsive_image_service');
     $fileUri = 'public://test.png';
     
-    // Create a resized image preserving original ratio with a width of 100px.
+    // Create a resized image preserving original aspect ratio with a width of 100px.
+    // "https://site.localhost/sites/default/files/styles/responsive/public/100/0/0/test.png?itok=fsdkjfksdj"
     $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, ['w' => 100]);
     
-    // Create an image 300px wide with the height a maximum ratio of 0.75 (3/4 of width).
-    $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, $responsiveImageEffectService->crop(300, 0.75));
+    // Create an image 400px wide with the height a maximum ratio of 0.75 (3/4 of width).
+    // "https://site.localhost/sites/default/files/styles/responsive/public/400/300/1/test.png?itok=fsdkjfksdj"
+    $src = $responsiveImageEffectService->responsiveImageUrl($fileUri, $responsiveImageEffectService->crop(400, 0.75));
     
     // Create a srcset set of images.
     $srcset = $responsiveImageEffectService->makeSrcset($fileUri, [ ['w' => 100, 'h' => 100, 'c' => FALSE], ['w' => 200, 'h' => 200, 'c' => FALSE], ['w' => 300, 'h' => 300, 'c' => FALSE] ]);
