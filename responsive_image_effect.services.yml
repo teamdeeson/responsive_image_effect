@@ -1,0 +1,12 @@
+services:
+  responsive_image_effect.responsive_image_service:
+    class: Drupal\responsive_image_effect\Service\ResponsiveImageEffectService
+  responsive_image_effect.route_subscriber:
+    class: Drupal\responsive_image_effect\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  path_processor.image_styles:
+    class: Drupal\responsive_image_effect\PathProcessor\PathProcessorImageStyles
+    arguments: ['@stream_wrapper_manager']
+    tags:
+      - { name: path_processor_inbound, priority: 300 }

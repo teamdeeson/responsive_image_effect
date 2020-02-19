@@ -1,0 +1,10 @@
+responsive_image_effect.style_public:
+  path: '/sites/default/files/styles/{image_style}/{scheme}/{width}/{height}/{crop}'
+  defaults:
+    _controller: '\Drupal\responsive_image_effect\Controller\ResponsiveImageEffectDownloadController::deliver'
+    _title: 'Overrides the default ImageStyleDownloadController to provide our custom dimensions'
+    width: 100
+    height: 100
+    crop: 0
+  requirements:
+    _access: 'TRUE'

@@ -1,0 +1,10 @@
+name: Responsive image effect
+description: Replaces Drupal image style url generator with a scale and crop image effect that can be specfied via URL arguments.
+package: Media
+
+type: module
+core: 8.x
+
+dependencies:
+  - drupal:image
+  - drupal:focalpoint

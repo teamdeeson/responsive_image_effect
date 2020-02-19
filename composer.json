@@ -1,0 +1,30 @@
+{
+  "name": "teamdeeson/responsive_image_effect",
+  "description": "A Drupal 8 module to provide programatic responsive images via URL parameters.",
+  "type": "drupal-module",
+  "keywords": ["Drupal", "responsive_image_effect"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dan James"
+    },
+    {
+      "name": "John Ennew"
+    },
+    {
+      "name": "Ben Dudiak-Fry"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Drupal\\responsive_image_effect\\": "src/"
+    }
+  },
+  "extra": {
+    "drush": {
+      "services": {
+        "drush.services.yml": "^9"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+services:
+  responsive_image_effect.commands:
+    class: \Drupal\responsive_image_effect\Commands\ResponsiveImageEffectCommands
+    tags:
+      - { name: drush.command }
