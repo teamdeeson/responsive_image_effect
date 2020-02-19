@@ -1,4 +1,4 @@
-# Responsive image generator.
+# 🖼️ Responsive image generator.
 
 This module allows the programatic generation of responsive images.
 
@@ -21,11 +21,11 @@ Where the parameters are as follows:
 For example, this generates a cropped 400 x 400 image:
 https://site.localhost/sites/default/files/styles/responsive/public/400/400/1/test.png?itok=fsdkjfksdj
 
-## Getting started.
+## 🐣 Getting started.
 
 Your site will need at least one Drupal image style which includes the responsive image effect.
 
-## Generating image URLs.
+## 🤖 Generating image URLs.
 
 To generate the URLs, a Utility service is available:
 
@@ -45,11 +45,11 @@ To generate the URLs, a Utility service is available:
     $srcset = $responsiveImageEffectService->makeSrcset($fileUri, [ ['w' => 100, 'h' => 100, 'c' => FALSE], ['w' => 200, 'h' => 200, 'c' => FALSE], ['w' => 300, 'h' => 300, 'c' => FALSE] ]);
 ```
 
-## Cropping.
+## ✂ Cropping.
 
 The module makes use of the [focal point](https://drupal.org/project/focal_point) module for cropping to centre any crop dimensions around a given point.
 
-## Drush command utility.
+## 🖇️ Drush command utility.
 
 There is a drush command file which allows you to generate URLs.
 
