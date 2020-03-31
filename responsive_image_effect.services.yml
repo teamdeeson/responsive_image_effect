@@ -6,3 +6,7 @@ services:
     arguments: ['@stream_wrapper_manager']
     tags:
       - { name: path_processor_inbound, priority: 300 }
+  redirect.route_normalizer_request_subscriber:
+    class: Drupal\responsive_image_effect\EventSubscriber\RouteNormalizerRequestSubscriber
+    tags:
+      - { name: event_subscriber }
