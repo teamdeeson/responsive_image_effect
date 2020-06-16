@@ -87,7 +87,7 @@ class ResponsiveImageEffect extends FocalPointScaleAndCropImageEffect {
       // Just scale, but only if the width requested is smaller.
       $originalDimensions = $this->getOriginalImageSize();
 
-      if ($originalDimensions['width'] < $this->configuration['width']) {
+      if ($originalDimensions && $originalDimensions['width'] && $originalDimensions['width'] < $this->configuration['width']) {
         // Basically do not do anything.
         $this->configuration['width'] = $originalDimensions['width'];
         $this->configuration['height'] = $originalDimensions['height'];
