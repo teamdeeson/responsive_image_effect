@@ -4,6 +4,7 @@ namespace Drupal\responsive_image_effect\Service;
 
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\responsive_image_effect\Plugin\ImageEffect\ResponsiveImageEffect;
 
 class ResponsiveImageEffectService {
 
@@ -88,6 +89,22 @@ class ResponsiveImageEffectService {
     }
 
     return "$scheme://styles/{$image_style_id}/{$source_scheme}/{$width}/{$height}/{$crop}/{$path}";
+  }
+
+  /**
+   * Check if an image style includes a responsive image effect.
+   *
+   * @param $image_style
+   *
+   * @return bool
+   */
+  public function imageStyleHasResponsiveEffect($image_style) {
+    foreach ($image_style->getEffects() as $effect) {
+      if ($effect instanceof ResponsiveImageEffect) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
 }
