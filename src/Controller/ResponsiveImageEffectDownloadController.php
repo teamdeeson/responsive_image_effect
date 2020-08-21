@@ -129,7 +129,7 @@ class ResponsiveImageEffectDownloadController extends FileDownloadController {
     $valid &= $crop === 0 || $crop === 1;
 
     // Make sure one of the image styles effects is a responsive image effect.
-    $valid &= $this->_imageStyleHasResponsiveEffect($image_style);
+    $valid &= $this->responsiveImageEffectService->imageStyleHasResponsiveEffect($image_style);
 
     // @todo - security goes here.
     /*
@@ -214,21 +214,4 @@ class ResponsiveImageEffectDownloadController extends FileDownloadController {
       return new Response($this->t('Error generating image.'), 500);
     }
   }
-
-  /**
-   * Check if an image style includes a responsive image effect.
-   *
-   * @param $image_style
-   *
-   * @return bool
-   */
-  protected function _imageStyleHasResponsiveEffect($image_style) {
-    foreach ($image_style->getEffects() as $effect) {
-      if ($effect instanceof ResponsiveImageEffect) {
-        return TRUE;
-      }
-    }
-    return FALSE;
-  }
-
 }

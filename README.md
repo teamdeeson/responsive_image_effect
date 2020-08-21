@@ -84,3 +84,9 @@ e.g. the following drush command generates a URL for an image with entity id 5, 
 e.g. the following drush command generates a URL for an image with entity id 5, width 300 and height of 210 (0.7 x 300) and specifies an image style called low-res
 
 `drush @docker rig 5 300 --crop=0.7 --style=low_res`
+
+# Known issues
+
+In order to make this compatible with Stage File Proxy a service within Stage File Proxy needed to be overwritten. On Drupal
+9 this can be done selectivley if the service is there. On Drupal 8 the service has to be there so when used on Drupal 8
+this module expects stage file proxy to be enabled, even in production.
