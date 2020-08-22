@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations.
+ */
+
+
+/**
+ * @param EntityTypeInterface[] $entity_types
+ */
+function responsive_image_effect_entity_type_build(&$entity_types) {
+  if (isset($entity_types['image_style'])) {
+    $entity_types['image_style']->setClass('Drupal\responsive_image_effect\Entity\ResponsiveImageStyle');
+  }
+}
