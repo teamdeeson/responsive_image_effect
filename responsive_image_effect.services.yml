@@ -11,9 +11,9 @@ services:
     tags:
       - { name: event_subscriber }
   # When using Stage File Proxy we need to do somethings differently.
-  responsive_image_effect.fetch_manager:
-    class: Drupal\responsive_image_effect\Service\ResponsiveImageEffectFetchManager
-    decorates: stage_file_proxy.fetch_manager
-    decoration_on_invalid: ignore # this won't work on Drupal 8 so you have to gave stage_file_proxy enabled on all envs
-    arguments: ['@http_client', '@file_system', '@logger.channel.stage_file_proxy']
+  #responsive_image_effect.fetch_manager:
+  #  class: Drupal\responsive_image_effect\Service\ResponsiveImageEffectFetchManager
+  #  decorates: stage_file_proxy.fetch_manager
+  #  decoration_on_invalid: ignore # this won't work on Drupal 8 so you have to gave stage_file_proxy enabled on all envs
+  #  arguments: ['@http_client', '@file_system', '@logger.channel.stage_file_proxy']
 
